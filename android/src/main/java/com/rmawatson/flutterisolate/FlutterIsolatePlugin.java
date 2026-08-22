@@ -27,7 +27,6 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.view.FlutterCallbackInformation;
-import io.flutter.view.FlutterRunArguments;
 
 /**
  * FlutterIsolatePlugin
@@ -81,9 +80,9 @@ public class FlutterIsolatePlugin implements FlutterPlugin, MethodCallHandler, S
     }
 
     /* This should be used to provide a custom plugin registrant for any FlutterIsolates that are spawned,
-     * by copying the GeneratedPluginRegistrant provided by flutter call, say "IsolatePluginRegistrant", modifying the
-     * list of plugins that are registered (removing the ones you do not want to use from within a plugin) and passing
-     * the class to setCustomIsolateRegistrant in your MainActivity.
+     * by copying the GeneratedPluginRegistrant provided by Flutter call, say "IsolatePluginRegistrant", modifying the
+     * list of plugins that are registered (removing the ones you do not want to use from within a plugin) and passing the
+     * class to setCustomIsolateRegistrant in your MainActivity.
      *
      * FlutterIsolatePlugin.setCustomIsolateRegistrant(IsolatePluginRegistrant.class);
      *
@@ -96,7 +95,7 @@ public class FlutterIsolatePlugin implements FlutterPlugin, MethodCallHandler, S
 
     @Override
     public void onAttachedToEngine(FlutterPluginBinding binding) {
-        engineGroup = new FlutterEngineGroup(binding.getApplicationContext()); 
+        engineGroup = new FlutterEngineGroup(binding.getApplicationContext());
         setupChannel(binding.getBinaryMessenger(), binding.getApplicationContext());
     }
 
@@ -121,9 +120,9 @@ public class FlutterIsolatePlugin implements FlutterPlugin, MethodCallHandler, S
         FlutterCallbackInformation cbInfo = FlutterCallbackInformation.lookupCallbackInformation(isolate.entryPoint);
 
         isolate.engine = engineGroup.createAndRunEngine(context, new DartExecutor.DartEntrypoint(
-            FlutterInjector.instance().flutterLoader().findAppBundlePath(),
-            cbInfo.callbackLibraryPath,
-            cbInfo.callbackName
+                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
+                cbInfo.callbackLibraryPath,
+                cbInfo.callbackName
         ));
 
         isolate.controlChannel = new MethodChannel(isolate.engine.getDartExecutor().getBinaryMessenger(), NAMESPACE + "/control");
